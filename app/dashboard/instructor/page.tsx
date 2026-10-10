@@ -1,0 +1,16 @@
+import { ArrowRight, BookOpen, CheckCircle2, Plus, Users } from 'lucide-react'
+import { ClassManager } from '@/components/instructor/class-manager'
+import { DashboardShell, SectionCard, StatCard } from '@/components/dashboard-shell'
+import { formatClassTime, getInstructorDashboardData } from '@/lib/dashboard-data'
+
+export default async function InstructorDashboard() {
+  const data = await getInstructorDashboardData()
+  const classes = data?.classes ?? []
+  const enrollments = data?.enrollments ?? []
+  const displayName = data?.instructor?.full_name ?? 'Maya'
+  return <DashboardShell role="Instructor" name={displayName} eyebrow="Good morning">
+    <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><StatCard label="Active learners" value={`${new Set(enrollments.map((item) => item.child_id)).size}`} detail="Across your classes" tone="violet" /><StatCard label="Live classes" value={`${classes.length}`} detail="Upcoming classes" tone="blue" /><StatCard label="Avg. mastery" value="—" detail="Connect learner progress" tone="green" /><StatCard label="Assignments" value="—" detail="Coming soon" tone="orange" /></div>
+    <div className="mb-6 grid gap-6 xl:grid-cols-[1.35fr_1fr]"><ClassManager /><div className="rounded-[22px] bg-[#1d1d38] p-6 text-white"><BookOpen className="mb-5 text-[#f6c766]" size={22} /><p className="text-[11px] font-bold uppercase tracking-[.14em] text-[#9e9cc3]">Teaching tip</p><h2 className="mt-2 text-xl font-extrabold">Celebrate the process.</h2><p className="mt-3 text-sm leading-6 text-[#b8b7d0]">Learners who reflect on their strategy improve faster than learners who only chase the answer.</p><button className="mt-6 flex items-center gap-2 text-sm font-extrabold text-[#f6c766]">View insights <ArrowRight size={16} /></button></div></div>
+    <div id="classes" className="grid gap-6 xl:grid-cols-[1.3fr_1fr]"><SectionCard title="Learner attention" subtitle="Students who may need a little extra support"><div className="space-y-1">{[['Noah Williams','Multiplication','42% mastery'],['Zoe Patel','Fractions','51% mastery'],['Leo Martin','Geometry','58% mastery']].map(([name, topic, score]) => <div key={name} className="flex items-center gap-3 border-t border-[#f0eff5] py-4"><div className="grid h-9 w-9 place-items-center rounded-xl bg-[#e9f1ff] text-sm font-extrabold text-[#5c86e6]">{name[0]}</div><div className="flex-1"><p className="text-sm font-bold">{name}</p><p className="mt-0.5 text-xs text-[#9997aa]">{topic} · {score}</p></div><button className="text-xs font-extrabold text-[#6257e9]">Review</button></div>)}</div></SectionCard><SectionCard title="Quick actions" subtitle="Keep your classroom moving"><div className="grid gap-3"><button className="flex items-center gap-3 rounded-xl bg-[#f2f1ff] p-4 text-left text-sm font-extrabold text-[#6257e9]"><Plus size={18} /> Create a class</button><button className="flex items-center gap-3 rounded-xl border border-[#ecebf4] p-4 text-left text-sm font-extrabold"><Users size={18} className="text-[#6257e9]" /> Invite learners</button><button className="flex items-center gap-3 rounded-xl border border-[#ecebf4] p-4 text-left text-sm font-extrabold"><CheckCircle2 size={18} className="text-[#4da477]" /> Review assignments</button></div></SectionCard></div>
+  </DashboardShell>
+}
