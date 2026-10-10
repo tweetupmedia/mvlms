@@ -3,8 +3,8 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: { default: 'Maths Vertex | Confident maths learning', template: '%s | Maths Vertex' },
+  description: 'Adaptive maths learning, thoughtful mentoring, and visible progress for learners and families from Grade 1 to Grade 8.',
   generator: 'v0.app',
   icons: {
     icon: [
