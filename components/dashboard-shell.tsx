@@ -10,7 +10,7 @@ const navigation = [
   { label: 'Learners', icon: Users },
 ]
 
-export function DashboardShell({ role, name, eyebrow, children }: { role: 'Parent' | 'Student' | 'Instructor'; name: string; eyebrow: string; children: React.ReactNode }) {
+export function DashboardShell({ role, name, eyebrow, children }: { role: 'Parent' | 'Student' | 'Instructor' | 'Admin'; name: string; eyebrow: string; children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [active, setActive] = useState('Overview')
 

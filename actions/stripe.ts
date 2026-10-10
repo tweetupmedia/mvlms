@@ -10,7 +10,7 @@ export async function startSubscriptionCheckout(productId: string) {
   const product = getProduct(productId)
   if (!product) throw new Error('Invalid subscription plan')
 
-  const supabase = await createServerClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
 

@@ -16,14 +16,14 @@ export async function getParentDashboardData() {
   ])
 
   const child = children?.[0]
-  if (!child) return { parent, child: null, progress: [], sessions: [] }
+  if (!child) return { parent, child: null, children: children ?? [], progress: [], sessions: [] }
 
   const [{ data: progress }, { data: sessions }] = await Promise.all([
     supabase.from('student_progress').select('topic_id, mastery, questions_answered, correct_answers, last_activity_at, topics(name)').eq('child_id', child.id).order('mastery', { ascending: false }),
     supabase.from('session_logs').select('started_at, duration_seconds, questions_answered, correct_answers').eq('child_id', child.id).order('started_at', { ascending: false }).limit(5),
   ])
 
-  return { parent, child, progress: progress ?? [], sessions: sessions ?? [] }
+  return { parent, child, children: children ?? [], progress: progress ?? [], sessions: sessions ?? [] }
 }
 
 export async function getParentWeeklyReports() {
@@ -60,6 +60,20 @@ export async function getInstructorDashboardData() {
     : { data: [] }
 
   return { instructor, classes: classes ?? [], enrollments: enrollments ?? [] }
+}
+
+export async function getAdminDashboardData() {
+  const { supabase, user } = await getCurrentUser()
+  if (!user) return null
+  const isAdmin = user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin'
+  if (!isAdmin) return { isAdmin: false, families: 0, learners: 0, instructors: 0, payments: 0 }
+  const [{ count: families }, { count: learners }, { count: instructors }, { count: payments }] = await Promise.all([
+    supabase.from('parents').select('id', { count: 'exact', head: true }),
+    supabase.from('child_profiles').select('id', { count: 'exact', head: true }),
+    supabase.from('instructors').select('id', { count: 'exact', head: true }),
+    supabase.from('payment_transactions').select('id', { count: 'exact', head: true }),
+  ])
+  return { isAdmin, families: families ?? 0, learners: learners ?? 0, instructors: instructors ?? 0, payments: payments ?? 0 }
 }
 
 export function formatClassTime(value: string) {

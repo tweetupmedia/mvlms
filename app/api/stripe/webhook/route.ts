@@ -31,5 +31,13 @@ export async function POST(request: Request) {
     await supabase.from('parents').update({ subscription_status: 'cancelled', subscription_tier: 'free' }).eq('id', parentId)
   }
 
+  if (['invoice.payment_failed'].includes(event.type) && parentId) {
+    await supabase.from('parents').update({ subscription_status: 'past_due' }).eq('id', parentId)
+  }
+
+  if (event.type === 'charge.refunded' && parentId) {
+    await supabase.from('parents').update({ subscription_status: 'refunded' }).eq('id', parentId)
+  }
+
   return NextResponse.json({ received: true })
 }
