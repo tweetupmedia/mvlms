@@ -62,6 +62,14 @@ export async function getInstructorDashboardData() {
   return { instructor, classes: classes ?? [], enrollments: enrollments ?? [] }
 }
 
+export async function getCurriculumData() {
+  const { supabase, user } = await getCurrentUser()
+  if (!user) return null
+  const { data: courses, error } = await supabase.from('courses').select('id, grade, name, description, course_topics(id, title, position)').order('grade')
+  if (error) return { courses: [] }
+  return { courses: (courses ?? []).map((course) => ({ ...course, course_topics: [...(course.course_topics ?? [])].sort((a, b) => a.position - b.position) })) }
+}
+
 export async function getAdminDashboardData() {
   const { supabase, user } = await getCurrentUser()
   if (!user) return null
