@@ -3,6 +3,7 @@ import { getPublicCurriculumData } from '@/lib/dashboard-data'
 import { portalUrl, PORTAL_HOSTS } from '@/lib/portal'
 import { ArrowRight, Brain, BookOpen, Check, Sparkles, Trophy, Users, Zap } from 'lucide-react'
 import { FreeClassForm } from '@/components/free-class-form'
+import Logo from '@/components/Logo'
 import { SiteFooter } from '@/components/site-footer'
 
 const syllabus = [
@@ -28,7 +29,7 @@ export default async function Home() {
   return <main className="min-h-screen overflow-hidden bg-[#faf9ff] text-[#17172b]">
     <header className="border-b border-[#eceaf5] bg-white/85 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
-        <Link href="/" className="flex items-center gap-3" aria-label="Maths Vertex home"><span className="relative block h-10 w-10"><video className="h-10 w-10 rounded-[13px] object-cover shadow-[0_8px_18px_rgba(98,87,233,.22)] motion-reduce:hidden" src="/brand-logo.mp4" poster="/icon.svg" autoPlay muted loop playsInline aria-label="Maths Vertex logo" /><video src="/brand-logo.mp4" poster="/icon.svg" autoPlay muted loop playsInline aria-label="Maths Vertex logo" className="hidden h-10 w-10 rounded-[13px] object-cover motion-reduce:block" /></span></Link>
+        <Logo />
         <nav className="hidden items-center gap-8 text-sm font-bold text-[#77758c] md:flex"><Link href="/how-it-works" className="transition hover:text-[#6257e9]">How it works</Link><Link href="/for-families" className="transition hover:text-[#6257e9]">For families</Link><Link href="/syllabus" className="transition hover:text-[#6257e9]">Syllabus</Link><Link href="/#free-class" className="transition hover:text-[#6257e9]">Free class</Link><Link href="/features" className="transition hover:text-[#6257e9]">Features</Link></nav>
         <div className="flex items-center gap-2"><Link href={portalUrl(PORTAL_HOSTS.family, '/auth/login')} className="rounded-xl px-3 py-2.5 text-sm font-extrabold text-[#6257e9] transition hover:bg-[#f0efff]">Log in</Link><Link href={portalUrl(PORTAL_HOSTS.family, '/auth/signup')} className="rounded-xl bg-[#6257e9] px-4 py-2.5 text-sm font-extrabold text-white shadow-[0_7px_16px_rgba(98,87,233,.2)] transition hover:bg-[#5147d5]">Get started</Link></div>
       </div>
