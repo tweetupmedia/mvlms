@@ -15,6 +15,9 @@ export default async function DashboardTab({ params }: { params: Promise<{ role:
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
+  const userRole = user.app_metadata?.role
+  const isAdmin = userRole === 'admin'
+  if (!isAdmin && userRole !== role) redirect(`/dashboard/${userRole === 'student' ? 'student' : userRole === 'instructor' ? 'instructor' : 'parent'}`)
   const displayRole = role === 'student' ? 'Student' : role === 'instructor' ? 'Instructor' : role === 'admin' ? 'Admin' : 'Parent'
   return <DashboardShell role={displayRole} name={user.user_metadata?.full_name ?? user.email?.split('@')[0] ?? 'there'} eyebrow={config.title}><SectionCard title={config.title} subtitle={config.text}><div className="rounded-2xl bg-[#f7f6fd] p-8 text-sm leading-7 text-[#77758c]">This dedicated workspace is ready for live {config.title.toLowerCase()} data from your Supabase account.</div></SectionCard></DashboardShell>
 }

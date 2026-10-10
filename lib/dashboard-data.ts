@@ -62,6 +62,12 @@ export async function getInstructorDashboardData() {
   return { instructor, classes: classes ?? [], enrollments: enrollments ?? [] }
 }
 
+export async function getPublicCurriculumData() {
+  const { supabase } = await getCurrentUser()
+  const { data } = await supabase.from('courses').select('id, grade, name, description, course_topics(id, title, position)').order('grade')
+  return (data ?? []).map((course) => ({ ...course, course_topics: [...(course.course_topics ?? [])].sort((a, b) => a.position - b.position) }))
+}
+
 export async function getCurriculumData() {
   const { supabase, user } = await getCurrentUser()
   if (!user) return null
@@ -73,7 +79,7 @@ export async function getCurriculumData() {
 export async function getAdminDashboardData() {
   const { supabase, user } = await getCurrentUser()
   if (!user) return null
-  const isAdmin = user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin'
+  const isAdmin = user.app_metadata?.role === 'admin'
   if (!isAdmin) return { isAdmin: false, families: 0, learners: 0, instructors: 0, payments: 0 }
   const [{ count: families }, { count: learners }, { count: instructors }, { count: payments }] = await Promise.all([
     supabase.from('parents').select('id', { count: 'exact', head: true }),

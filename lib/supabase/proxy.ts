@@ -22,12 +22,21 @@ export async function updateSession(request: NextRequest) {
   )
 
   const { data: { user } } = await supabase.auth.getUser()
-  const isProtectedRoute = request.nextUrl.pathname.startsWith('/dashboard/')
+  const dashboardMatch = request.nextUrl.pathname.match(/^\/dashboard\/(parent|student|instructor|admin)(?:\/|$)/)
+  const requiredRole = dashboardMatch?.[1]
+  const userRole = user?.app_metadata?.role
+  const isAdmin = userRole === 'admin'
 
-  if (isProtectedRoute && !user) {
+  if (requiredRole && !user) {
     const redirectUrl = request.nextUrl.clone()
     redirectUrl.pathname = '/auth/login'
     redirectUrl.searchParams.set('next', request.nextUrl.pathname)
+    return NextResponse.redirect(redirectUrl)
+  }
+
+  if (requiredRole && user && !isAdmin && userRole !== requiredRole) {
+    const redirectUrl = request.nextUrl.clone()
+    redirectUrl.pathname = `/dashboard/${userRole === 'student' ? 'student' : userRole === 'instructor' ? 'instructor' : 'parent'}`
     return NextResponse.redirect(redirectUrl)
   }
 

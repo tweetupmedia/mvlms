@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { Activity, CreditCard, ShieldCheck, Users } from 'lucide-react'
 import { DashboardShell, SectionCard, StatCard } from '@/components/dashboard-shell'
+import { FreeClassRequests } from '@/components/admin/free-class-requests'
 import { getAdminDashboardData, getCurriculumData } from '@/lib/dashboard-data'
 
 export default async function AdminDashboard() {
@@ -15,14 +16,15 @@ export default async function AdminDashboard() {
       <StatCard label="Instructors" value={`${data.instructors}`} detail="Teaching accounts" tone="green" />
       <StatCard label="Payments" value={`${data.payments}`} detail="Recorded transactions" tone="orange" />
     </div>
-    <SectionCard title="Curriculum catalogue" subtitle="Courses and topic structure for Grades 1–8">
+    <SectionCard title="Free-class operations" subtitle="Review, schedule, and update parent requests"><FreeClassRequests /></SectionCard>
+    <div className="mt-6"><SectionCard title="Curriculum catalogue" subtitle="Courses and topic structure for Grades 1–8">
       <div className="grid gap-4 md:grid-cols-2">
         {(curriculum?.courses ?? []).map((course) => <details key={course.id} className="group rounded-2xl border border-[#ebeaf3] bg-[#fbfaff] p-4" open={course.grade === 1}>
           <summary className="flex cursor-pointer list-none items-start justify-between gap-4"><div><span className="text-[11px] font-extrabold uppercase tracking-[.14em] text-[#6257e9]">Grade {course.grade}</span><h3 className="mt-1 text-base font-extrabold">{course.name}</h3><p className="mt-1 text-xs leading-5 text-[#858399]">{course.description}</p></div><span className="rounded-full bg-[#eeedff] px-2.5 py-1 text-[11px] font-bold text-[#6257e9]">{course.course_topics.length} topics</span></summary>
           <ol className="mt-4 grid gap-2 border-t border-[#ebeaf3] pt-4 sm:grid-cols-2">{course.course_topics.map((topic) => <li key={topic.id} className="flex items-center gap-2 text-xs font-semibold text-[#68667b]"><span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white text-[10px] font-extrabold text-[#6257e9]">{topic.position}</span>{topic.title}</li>)}</ol>
         </details>)}
       </div>
-    </SectionCard>
+    </SectionCard></div>
     <div className="mt-6 grid gap-6 xl:grid-cols-[1.2fr_1fr]">
       <SectionCard title="Platform health" subtitle="Production readiness signals">
         <div className="space-y-3">

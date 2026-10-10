@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { BarChart3, BookOpen, CalendarDays, ChevronDown, GraduationCap, LayoutDashboard, Menu, Trophy, Users, X } from 'lucide-react'
 
@@ -13,8 +14,9 @@ const navigation = [
 
 export function DashboardShell({ role, name, eyebrow, children }: { role: 'Parent' | 'Student' | 'Instructor' | 'Admin'; name: string; eyebrow: string; children: React.ReactNode }) {
   const rolePath = role.toLowerCase() === 'student' ? 'student' : role.toLowerCase() === 'instructor' ? 'instructor' : role.toLowerCase() === 'admin' ? 'admin' : 'parent'
+  const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [active, setActive] = useState('Overview')
+  const active = pathname.split('/')[3] ? pathname.split('/')[3].replace(/-/g, ' ').replace(/^./, (letter) => letter.toUpperCase()) : 'Overview'
 
   return (
     <main className="min-h-screen bg-[#f8f8fc] text-[#17172b]">
@@ -22,18 +24,18 @@ export function DashboardShell({ role, name, eyebrow, children }: { role: 'Paren
         <div className="mx-auto flex h-[74px] max-w-[1500px] items-center justify-between px-5 sm:px-8 lg:px-10">
           <div className="flex items-center gap-3">
             <button className="rounded-xl p-2 text-[#6b6b84] lg:hidden" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle navigation">{mobileOpen ? <X size={21} /> : <Menu size={21} />}</button>
-            <video className="h-10 w-10 rounded-[13px] object-cover shadow-[0_5px_12px_rgba(98,87,233,.25)]" src="/brand-logo.mp4" autoPlay muted loop playsInline aria-label="Maths Vertex logo" />
+            <span className="relative block h-10 w-10"><video className="h-10 w-10 rounded-[13px] object-cover shadow-[0_5px_12px_rgba(98,87,233,.25)] motion-reduce:hidden" src="/brand-logo.mp4" poster="/icon.svg" autoPlay muted loop playsInline aria-label="Maths Vertex logo" /><img src="/icon.svg" alt="Maths Vertex" className="hidden h-10 w-10 rounded-[13px] object-cover motion-reduce:block" /></span>
             <span className="text-[20px] font-extrabold tracking-[-.04em]">Maths<span className="text-[#6257e9]">Vertex</span></span>
           </div>
           <div className="flex items-center gap-3"><div className="hidden text-right sm:block"><p className="text-xs font-bold text-[#9997aa]">{role} workspace</p><p className="text-sm font-extrabold">{name}</p></div><button aria-label="Open profile" className="grid h-10 w-10 place-items-center rounded-full bg-[#dce5ff] text-sm font-extrabold text-[#536dc6]">{name.slice(0, 1)}</button></div>
         </div>
-        {mobileOpen && <nav className="border-t border-[#ecebf4] bg-white px-5 py-3 lg:hidden">{navigation.map(({ label, icon: Icon, tab }) => <Link key={label} href={`/dashboard/${rolePath}${tab ? `/${tab}` : ''}`} onClick={() => { setActive(label); setMobileOpen(false) }} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold ${active === label ? 'bg-[#6257e9] text-white' : 'text-[#79778e]'}`}><Icon size={17} />{label}</Link>)}</nav>}
+        {mobileOpen && <nav className="border-t border-[#ecebf4] bg-white px-5 py-3 lg:hidden">{navigation.map(({ label, icon: Icon, tab }) => <Link key={label} href={`/dashboard/${rolePath}${tab ? `/${tab}` : ''}`} onClick={() => setMobileOpen(false)} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold ${active === label ? 'bg-[#6257e9] text-white' : 'text-[#79778e]'}`}><Icon size={17} />{label}</Link>)}</nav>}
       </header>
       <div className="mx-auto flex max-w-[1500px]">
         <aside className="hidden min-h-[calc(100vh-74px)] w-[245px] shrink-0 border-r border-[#e9e8f2] bg-white px-5 py-8 lg:block">
           <div className="mb-9 rounded-2xl bg-[#f2f1ff] p-4"><div className="mb-3 grid h-11 w-11 place-items-center rounded-xl bg-[#ffcb73] text-lg font-extrabold text-[#98690f]">{name.slice(0, 1)}</div><p className="text-sm font-extrabold">{name}&apos;s workspace</p><p className="mt-1 text-xs font-medium text-[#8d8ba2]">{eyebrow}</p></div>
           <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[.16em] text-[#aaa9bb]">Workspace</p>
-          <div className="space-y-1">{navigation.map(({ label, icon: Icon, tab }) => <Link key={label} href={`/dashboard/${rolePath}${tab ? `/${tab}` : ''}`} onClick={() => setActive(label)} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition ${active === label ? 'bg-[#6257e9] text-white shadow-[0_6px_16px_rgba(98,87,233,.2)]' : 'text-[#79778e] hover:bg-[#f5f4fb]'}`}><Icon size={18} />{label}</Link>)}</div>
+          <div className="space-y-1">{navigation.map(({ label, icon: Icon, tab }) => <Link key={label} href={`/dashboard/${rolePath}${tab ? `/${tab}` : ''}`}  className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition ${active === label ? 'bg-[#6257e9] text-white shadow-[0_6px_16px_rgba(98,87,233,.2)]' : 'text-[#79778e] hover:bg-[#f5f4fb]'}`}><Icon size={18} />{label}</Link>)}</div>
           <div className="mt-14 rounded-2xl bg-[#fff4df] p-4"><GraduationCap className="mb-3 text-[#bd7810]" size={20} /><p className="text-sm font-extrabold">Keep the momentum</p><p className="mt-1 text-xs leading-5 text-[#9b7942]">A little practice each day builds confident mathematicians.</p></div>
         </aside>
         <section className="min-w-0 flex-1 px-5 py-8 sm:px-8 lg:px-12 lg:py-10"><div className="mb-8"><p className="mb-2 text-sm font-bold text-[#8e8ca1]">Wednesday, 14 June 2024</p><h1 className="text-[32px] font-extrabold tracking-[-.045em] sm:text-[40px]">{eyebrow}, <span className="text-[#6257e9]">{name}</span></h1><p className="mt-2 text-[15px] text-[#858399]">Here&apos;s a clear view of what matters next.</p></div>{children}</section>
