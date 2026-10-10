@@ -19,9 +19,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
   }
 
-  const payload = JSON.parse(rawBody) as {
-    type?: string
-    data?: { order?: { order_id?: string }; payment?: { payment_status?: string } }
+  let payload: { type?: string; data?: { order?: { order_id?: string }; payment?: { payment_status?: string } } }
+  try {
+    payload = JSON.parse(rawBody) as typeof payload
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
   const orderId = payload.data?.order?.order_id
   if (!orderId) return NextResponse.json({ received: true })
