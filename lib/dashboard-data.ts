@@ -16,14 +16,14 @@ export async function getParentDashboardData() {
   ])
 
   const child = children?.[0]
-  if (!child) return { parent, child: null, progress: [], sessions: [] }
+  if (!child) return { parent, child: null, children: children ?? [], progress: [], sessions: [] }
 
   const [{ data: progress }, { data: sessions }] = await Promise.all([
     supabase.from('student_progress').select('topic_id, mastery, questions_answered, correct_answers, last_activity_at, topics(name)').eq('child_id', child.id).order('mastery', { ascending: false }),
     supabase.from('session_logs').select('started_at, duration_seconds, questions_answered, correct_answers').eq('child_id', child.id).order('started_at', { ascending: false }).limit(5),
   ])
 
-  return { parent, child, progress: progress ?? [], sessions: sessions ?? [] }
+  return { parent, child, children: children ?? [], progress: progress ?? [], sessions: sessions ?? [] }
 }
 
 export async function getParentWeeklyReports() {
