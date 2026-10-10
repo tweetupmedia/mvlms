@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
   const origin = request.headers.get('origin') ?? new URL(request.url).origin
   const orderId = `mv_${user.id.slice(0, 8)}_${Date.now()}`
-  const response = await fetch('https://sandbox.cashfree.com/pg/orders', {
+  const response = await fetch('https://api.cashfree.com/pg/orders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
