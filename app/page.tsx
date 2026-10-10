@@ -23,6 +23,25 @@ const features = [
   { icon: Trophy, title: 'Live challenges', text: 'Build confidence with timed sprints and friendly live duels.' },
 ]
 
+const learningVisuals = [
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/12-kIZsr5fegKOKJ0jYW6pC9G3sVBg8p7.jpg', alt: 'Blue set square, ruler, and yellow pencil', label: 'Geometry toolkit', color: '#dff4ff' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/13-Yspk8iZzZY0ppJkgJuKDa5ynz8PUIi.jpg', alt: 'Colorful counting blocks and discs', label: 'Number play', color: '#fff0fb' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/14-BmLI0YRtzx3YNCxbpG5kJ0OAxQPTNh.jpg', alt: 'Blue crossed shape', label: 'Pattern thinking', color: '#edf0ff' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/15-zY408R1YK0VQA5yp0K95FloTNmkQ2E.jpg', alt: 'Colorful calculator', label: 'Everyday maths', color: '#fff6da' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/16-fvpa2PeC04maBUCvzLO2Bk5MinotPn.jpg', alt: 'Bright yellow calculator', label: 'Quick calculations', color: '#fff4d3' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/17-Kr41LqRt4cm4VqHhXS71pzRZ9ONB4F.jpg', alt: 'Pink compass, ruler, and protractor', label: 'Construct and explore', color: '#ffe9f7' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/18-FB8hm1M3opjp8LPeXcRqZmh5V8jPJN.jpg', alt: 'Blue friendly ruler character', label: 'Meet the helpers', color: '#e8f4ff' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/19-Da03PQtbjENa0XKqDZIIlPDyz1qpHs.jpg', alt: 'Yellow friendly ruler character', label: 'Learn with joy', color: '#fff8c8' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/20-QjW8qTaCHJNBzdzKNiz45gEqzviLsx.jpg', alt: 'Purple friendly ruler character', label: 'Friendly guidance', color: '#f0e7ff' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/21-YIugRh7gky13lcRvseSFJGgv8iayIU.jpg', alt: 'Colourful measuring tool illustration', label: 'Measure and compare', color: '#fff0e4' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/22-8EPXNPPBfSaOgZuRNGgqR8RZGV7Va9.jpg', alt: 'Blue ruler character holding a pencil', label: 'Practice partners', color: '#e8edff' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/23-VSup0VaqX4z0lgX7WVXlW6CD36FhO6.jpg', alt: 'Smiling orange protractor character', label: 'Angles made easy', color: '#fff0d8' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/24-8Am9MOY1KtmeY5FJEWr4hapWOS94RC.jpg', alt: 'Purple ruler character', label: 'Build confidence', color: '#eeeaff' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/25-Wt7KRnJkevuupHaoEpA1TBtMDEHI45.jpg', alt: 'Pink pencil character', label: 'Create and solve', color: '#ffe9f8' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/26-WeOA0KDLaCPMMhJ6n3Qse2NG5W4JKM.jpg', alt: 'Smiling yellow and orange eraser', label: 'Make mistakes safely', color: '#fff6d6' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/27-vQtbNlqlI3KBp13MfqosTc6TkEmix2.jpg', alt: 'Simple helicopter outline', label: 'Big imagination', color: '#eef5ff' },
+]
+
 export default async function Home() {
   const curriculum = await getPublicCurriculumData()
   const publicSyllabus = curriculum.map((course) => ({ grade: `Grade ${course.grade}`, course: course.name.replace(/ for Grade \d+$/, ''), topics: course.course_topics.map((topic) => topic.title) }))
@@ -44,6 +63,24 @@ export default async function Home() {
     <section id="syllabus" className="border-y border-[#eceaf5] bg-[#f5f3ff]"><div className="mx-auto max-w-7xl px-5 py-20 sm:px-8"><div className="flex flex-col justify-between gap-5 md:flex-row md:items-end"><div className="max-w-2xl"><p className="text-xs font-extrabold uppercase tracking-[.18em] text-[#6257e9]">What we cover</p><h2 className="mt-3 text-3xl font-extrabold tracking-[-.04em] sm:text-4xl">A complete maths journey from Grade 1 to Grade 8.</h2><p className="mt-4 text-sm leading-7 text-[#77758c]">Every course is organised by grade with a clear progression of topics. Later, each topic will open into lessons, mental maths tricks, worked examples, practice, and live assessments.</p></div><Link href={portalUrl(PORTAL_HOSTS.family, '/auth/signup')} className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-[#6257e9] px-4 py-3 text-sm font-extrabold text-white transition hover:bg-[#5147d5]">Explore with your family <ArrowRight size={16} /></Link></div><div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">{(publicSyllabus.length ? publicSyllabus : syllabus).map((item) => <details key={item.grade} className="group rounded-2xl border border-[#e5e2f7] bg-white p-5 shadow-sm" open={item.grade === 'Grade 1'}><summary className="flex cursor-pointer list-none items-start justify-between gap-3"><div><span className="text-[11px] font-extrabold uppercase tracking-[.14em] text-[#6257e9]">{item.grade}</span><h3 className="mt-1 text-lg font-extrabold">{item.course}</h3></div><BookOpen size={18} className="mt-1 text-[#aaa5df] transition group-open:text-[#6257e9]" /></summary><ul className="mt-4 space-y-2 border-t border-[#efedf8] pt-4">{item.topics.map((topic) => <li key={topic} className="flex gap-2 text-xs font-semibold leading-5 text-[#77758c]"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6257e9]" />{topic}</li>)}</ul></details>)}</div></div></section>
 
     <section id="how-it-works" className="mx-auto grid max-w-7xl gap-10 px-5 py-20 sm:px-8 lg:grid-cols-2 lg:items-center"><div><p className="text-xs font-extrabold uppercase tracking-[.18em] text-[#6257e9]">How it works</p><h2 className="mt-3 text-3xl font-extrabold tracking-[-.04em] sm:text-4xl">Confidence grows one good question at a time.</h2><div className="mt-8 space-y-5">{['Take a short diagnostic to find the right starting point.', 'Practice with adaptive questions and Socratic hints.', 'See patterns, celebrate progress, and choose the next challenge.'].map((item, index) => <div key={item} className="flex gap-4"><span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#6257e9] text-sm font-extrabold text-white">{index + 1}</span><p className="pt-1 text-sm font-bold leading-6 text-[#55536d]">{item}</p></div>)}</div></div><div id="for-families" className="rounded-[26px] bg-[#fff4df] p-7 sm:p-9"><div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#ffcf7b] text-[#9c6915]"><Users size={23} /></div><h2 className="mt-6 text-2xl font-extrabold tracking-[-.03em]">For families who want to stay close.</h2><p className="mt-3 text-sm leading-6 text-[#856b3e]">Get clear weekly reports, skill-level insights, and a calm view of progress without turning learning into a scoreboard.</p><ul className="mt-6 space-y-3 text-sm font-bold text-[#765d34]"><li className="flex items-center gap-2"><Check size={16} className="text-[#bd7810]" /> Sunday Parent Briefing</li><li className="flex items-center gap-2"><Check size={16} className="text-[#bd7810]" /> Multi-child progress view</li><li className="flex items-center gap-2"><Check size={16} className="text-[#bd7810]" /> Live learning and practice insights</li></ul><Link href={portalUrl(PORTAL_HOSTS.family, '/auth/signup')} className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#1d1d38] px-4 py-3 text-sm font-extrabold text-white transition hover:bg-[#302f52]">Create a family account <ArrowRight size={16} /></Link></div></section>
+
+    <section className="border-y border-[#eceaf5] bg-white py-20 sm:py-24" aria-labelledby="visual-learning-title">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-xs font-extrabold uppercase tracking-[.18em] text-[#6257e9]">Maths you can see</p>
+          <h2 id="visual-learning-title" className="mt-3 text-3xl font-extrabold tracking-[-.04em] sm:text-4xl">A colourful world for curious minds.</h2>
+          <p className="mt-4 text-sm leading-7 text-[#77758c]">From rulers and shapes to friendly learning characters, every visual is designed to make abstract ideas feel familiar, playful, and worth exploring.</p>
+        </div>
+        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-8">
+          {learningVisuals.map((visual, index) => <figure key={visual.src} className={`group relative overflow-hidden rounded-[24px] border border-white p-3 shadow-[0_12px_30px_rgba(48,44,100,.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(48,44,100,.14)] ${index % 3 === 0 ? 'sm:translate-y-5' : ''}`} style={{ backgroundColor: visual.color }}>
+            <div className="flex aspect-square items-center justify-center overflow-hidden rounded-[18px] bg-white/55">
+              <img src={visual.src} alt={visual.alt} loading="lazy" className="h-full w-full object-contain mix-blend-multiply transition duration-500 group-hover:scale-105" />
+            </div>
+            <figcaption className="px-1 pb-1 pt-3 text-center text-[11px] font-extrabold leading-4 text-[#35344e]">{visual.label}</figcaption>
+          </figure>)}
+        </div>
+      </div>
+    </section>
 
     <SiteFooter />
   </main>
