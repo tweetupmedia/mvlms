@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getProduct } from '@/lib/products'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 export async function POST(request: Request) {
   const supabase = await createClient()
@@ -41,5 +42,16 @@ export async function POST(request: Request) {
 
   if (!response.ok) return NextResponse.json({ error: 'Unable to start Cashfree checkout.' }, { status: 502 })
   const order = await response.json()
+  const admin = createAdminClient()
+  const { error: transactionError } = await admin.from('payment_transactions').insert({
+    provider: 'cashfree',
+    provider_order_id: orderId,
+    user_id: user.id,
+    product_id: product.id,
+    amount_in_minor_units: product.priceInCents,
+    currency: 'INR',
+    status: 'created',
+  })
+  if (transactionError) return NextResponse.json({ error: 'Unable to record checkout.' }, { status: 502 })
   return NextResponse.json({ paymentSessionId: order.payment_session_id })
 }
