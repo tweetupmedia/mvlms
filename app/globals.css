@@ -6,6 +6,8 @@
 
 video[aria-label='Maths Vertex logo'] { object-position: center; }
 
+body { font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif; }
+
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
