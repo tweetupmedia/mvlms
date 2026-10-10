@@ -1,5 +1,14 @@
 @import 'tailwindcss';
 
+@keyframes character-float {
+  0%, 100% { transform: translateY(0) rotate(var(--character-rotation, 0deg)); }
+  50% { transform: translateY(-8px) rotate(var(--character-rotation, 0deg)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
