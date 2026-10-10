@@ -1,6 +1,14 @@
 import { Analytics } from '@vercel/analytics/next'
+import { Montserrat } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['700', '800'],
+  display: 'swap',
+  variable: '--font-montserrat',
+})
 
 export const metadata: Metadata = {
   title: { default: 'Maths Vertex | Confident maths learning', template: '%s | Maths Vertex' },
@@ -40,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body className={`${montserrat.variable} antialiased`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

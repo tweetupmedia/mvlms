@@ -10,6 +10,7 @@ export default async function AdminDashboard() {
   if (!data.isAdmin) redirect('/dashboard/parent')
 
   return <DashboardShell role="Admin" name="Operations" eyebrow="Platform overview">
+    <div className="mb-6 flex flex-col justify-between gap-4 rounded-[22px] border border-[#e9e7f1] bg-[#1d1d38] p-6 text-white sm:flex-row sm:items-center"><div><p className="text-xs font-extrabold uppercase tracking-[.16em] text-[#bdb8ff]">Admin control center</p><h2 className="mt-2 text-2xl font-extrabold tracking-[-.03em]">Everything important, in one calm view.</h2><p className="mt-2 max-w-xl text-sm leading-6 text-[#cbc9df]">Manage families, review free-class requests, keep the Grade 1–8 curriculum healthy, and monitor payments from one protected workspace.</p></div><div className="shrink-0 rounded-2xl bg-white/10 px-4 py-3 text-sm font-bold text-[#e8e6ff]"><ShieldCheck size={18} className="mb-2 text-[#a9a3ff]" />Admin access verified</div></div>
     <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       <StatCard label="Families" value={`${data.families}`} detail="Registered parents" tone="violet" />
       <StatCard label="Learners" value={`${data.learners}`} detail="Active profiles" tone="blue" />
