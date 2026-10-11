@@ -64,14 +64,14 @@ export async function getInstructorDashboardData() {
 
 export async function getPublicCurriculumData() {
   const { supabase } = await getCurrentUser()
-  const { data } = await supabase.from('courses').select('id, grade, name, description, course_topics(id, title, position)').order('grade')
+  const { data } = await supabase.from('courses').select('id, grade, name, description, course_topics(id, title, position, content)').order('grade')
   return (data ?? []).map((course) => ({ ...course, course_topics: [...(course.course_topics ?? [])].sort((a, b) => a.position - b.position) }))
 }
 
 export async function getCurriculumData() {
   const { supabase, user } = await getCurrentUser()
   if (!user) return null
-  const { data: courses, error } = await supabase.from('courses').select('id, grade, name, description, course_topics(id, title, position)').order('grade')
+  const { data: courses, error } = await supabase.from('courses').select('id, grade, name, description, course_topics(id, title, position, content)').order('grade')
   if (error) return { courses: [] }
   return { courses: (courses ?? []).map((course) => ({ ...course, course_topics: [...(course.course_topics ?? [])].sort((a, b) => a.position - b.position) })) }
 }

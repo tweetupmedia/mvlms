@@ -23,7 +23,7 @@ export default async function AdminDashboard() {
       <div className="grid gap-4 md:grid-cols-2">
         {(curriculum?.courses ?? []).map((course) => <details key={course.id} className="group rounded-2xl border border-[#ebeaf3] bg-[#fbfaff] p-4" open={course.grade === 1}>
           <summary className="flex cursor-pointer list-none items-start justify-between gap-4"><div><span className="text-[11px] font-extrabold uppercase tracking-[.14em] text-[#6257e9]">Grade {course.grade}</span><h3 className="mt-1 text-base font-extrabold">{course.name}</h3><p className="mt-1 text-xs leading-5 text-[#858399]">{course.description}</p></div><span className="rounded-full bg-[#eeedff] px-2.5 py-1 text-[11px] font-bold text-[#6257e9]">{course.course_topics.length} topics</span></summary>
-          <ol className="mt-4 grid gap-2 border-t border-[#ebeaf3] pt-4 sm:grid-cols-2">{course.course_topics.map((topic) => <li key={topic.id} className="flex items-center gap-2 text-xs font-semibold text-[#68667b]"><span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white text-[10px] font-extrabold text-[#6257e9]">{topic.position}</span>{topic.title}</li>)}</ol>
+          <ol className="mt-4 grid gap-3 border-t border-[#ebeaf3] pt-4">{course.course_topics.map((topic) => <li key={topic.id} className="rounded-xl bg-white/80 p-3"><div className="flex items-center gap-2 text-xs font-extrabold text-[#68667b]"><span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#eeedff] text-[10px] font-extrabold text-[#6257e9]">{topic.position}</span>{topic.title}</div>{topic.content ? <p className="mt-2 pl-7 text-xs leading-5 text-[#858399]">{topic.content}</p> : null}</li>)}</ol>
         </details>)}
       </div>
     </SectionCard></div>
