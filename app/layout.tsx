@@ -11,7 +11,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: { default: 'Maths Vertex | Confident maths learning', template: '%s | Maths Vertex' },
+  title: { default: 'Ask | Confident maths learning', template: '%s | Ask' },
   description: 'Adaptive maths learning, thoughtful mentoring, and visible progress for learners and families from Grade 1 to Grade 8.',
   generator: 'v0.app',
   icons: {

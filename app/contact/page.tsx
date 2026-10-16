@@ -1,4 +1,4 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-export const metadata: Metadata = { title: 'Contact Maths Vertex', description: 'Get in touch with the Maths Vertex team.' }
+export const metadata: Metadata = { title: 'Contact Ask', description: 'Get in touch with the Ask team.' }
 export default function ContactPage() { return <main className="min-h-screen bg-[#faf9ff] px-5 py-20 text-[#17172b] sm:px-8"><div className="mx-auto max-w-2xl"><Link href="/" className="text-sm font-extrabold text-[#6257e9]">← Back home</Link><p className="mt-12 text-xs font-extrabold uppercase tracking-[.18em] text-[#6257e9]">We’re here to help</p><h1 className="mt-3 text-5xl font-extrabold tracking-[-.06em]">Contact us</h1><p className="mt-6 text-lg leading-8 text-[#77758c]">Questions about classes, accounts, privacy, or partnerships? Our team would be happy to help.</p><a href="mailto:hello@tutoring.courses" className="mt-8 inline-flex rounded-xl bg-[#6257e9] px-5 py-3.5 text-sm font-extrabold text-white">hello@tutoring.courses</a></div></main> }
