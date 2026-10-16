@@ -7,9 +7,10 @@ export type ChildOption = { id: string; display_name: string; grade_level: strin
 export function ChildSwitcher({ children }: { children: ChildOption[] }) {
   const [selected, setSelected] = useState(children[0]?.id ?? '')
   if (children.length < 2) return null
-  return <div className="mb-6 flex flex-wrap gap-2" aria-label="Switch child">
-    {children.map((child) => <button key={child.id} type="button" onClick={() => setSelected(child.id)} aria-pressed={selected === child.id} className={`rounded-full px-4 py-2 text-xs font-extrabold transition ${selected === child.id ? 'bg-[#6257e9] text-white' : 'border border-[#eceaf5] bg-white text-[#858399]'}`}>{child.display_name} · Grade {child.grade_level ?? '—'}</button>)}
-  </div>
+  return <fieldset className="mb-6 flex flex-wrap gap-2" aria-label="Select a learner">
+    <legend className="sr-only">Select a learner to view</legend>
+    {children.map((child) => <button key={child.id} type="button" onClick={() => setSelected(child.id)} aria-pressed={selected === child.id} className={`rounded-full px-4 py-2 text-xs font-extrabold transition ${selected === child.id ? 'bg-[#6257e9] text-white' : 'border border-[#eceaf5] bg-white text-[#858399]'}`}>{child.display_name} · Grade {child.grade_level ?? '—'}    </button>)}
+  </fieldset>
 }
 
 export function SeatSummary({ children, seats }: { children: ChildOption[]; seats: number }) {
