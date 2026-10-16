@@ -40,7 +40,9 @@ export function DashboardShell({ role, name, eyebrow, children }: { role: 'Paren
         <div className="mx-auto flex h-[74px] max-w-[1500px] items-center justify-between px-5 sm:px-8 lg:px-10">
           <div className="flex items-center gap-3">
             <button type="button" className="rounded-xl p-2 text-[#6b6b84] lg:hidden" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={mobileOpen} aria-controls="mobile-navigation">{mobileOpen ? <X size={21} /> : <Menu size={21} />}</button>
-            <span className="grid size-10 place-items-center rounded-[13px] bg-[#0057FF] text-xl font-extrabold tracking-[-.08em] text-white shadow-[0_5px_12px_rgba(0,87,255,.25)]" aria-hidden="true">A</span>
+            <span className="grid size-10 place-items-center overflow-hidden rounded-[13px] bg-transparent" aria-hidden="true">
+              <video src="/ask-logo.mp4" autoPlay loop muted playsInline aria-hidden="true" className="size-full object-contain mix-blend-screen" />
+            </span>
             <span className="text-[20px] font-extrabold tracking-[-.04em]">Ask</span>
           </div>
           <div className="flex items-center gap-3"><div className="hidden text-right sm:block"><p className="text-xs font-bold text-[#9997aa]">{role} workspace</p><p className="text-sm font-extrabold">{name}</p></div><button aria-label="Open profile" className="grid h-10 w-10 place-items-center rounded-full bg-[#dce5ff] text-sm font-extrabold text-[#536dc6]">{name.slice(0, 1)}</button></div>
