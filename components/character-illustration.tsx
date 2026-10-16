@@ -12,7 +12,7 @@ export function CharacterIllustration({ src, alt, className = '', delay = '0s' }
       alt={alt}
       aria-hidden={!alt}
       loading="lazy"
-      className={`pointer-events-none absolute z-0 w-28 object-contain opacity-90 motion-safe:animate-[character-float_7s_ease-in-out_infinite] ${className}`}
+      className={`pointer-events-none absolute z-0 w-28 object-contain opacity-90 will-change-transform motion-safe:animate-[character-float_7s_ease-in-out_infinite] ${className}`}
       style={{ animationDelay: delay }}
     />
   )
