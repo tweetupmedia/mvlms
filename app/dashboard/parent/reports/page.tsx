@@ -18,7 +18,7 @@ export default async function ParentReportsPage() {
   </DashboardShell>
 }
 
-export const metadata = { title: 'Weekly Reports | MathsVertex' }
+export const metadata = { title: 'Weekly Reports | Ask' }
 
 export const dynamic = 'force-dynamic'
 
